@@ -28,7 +28,7 @@
                                             <c:forEach items="${catList}" var="cat">
 <%--                                                <option value="${cat.id}" <c:if test="${topicVo.catId==cat.id}">selected</c:if>>${cat.catName}</option>--%>
 <%--                                                <option value="${cat.id}" <c:if test="${topicVo.catId==cat.id}">selected</c:if>>${cat.name}</option>--%>
-                                                <option value="${cat.id}" <c:if test="${topicVo.catId==cat.id}">selected</c:if>>cat.name</option>
+                                                <option value="${cat.id}" <c:if test="${topicVo.catId==cat.id}">selected</c:if>>${cat.catname}</option>
                                             </c:forEach>
                                         </select>
                                     </div>

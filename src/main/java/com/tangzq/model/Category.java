@@ -29,6 +29,8 @@ public class Category implements Serializable {
 
     private Long parentid;
 
+
+
  // @Column(name = "date_created",unique = true)
 // private Timestamp date_created;
 
@@ -53,7 +55,7 @@ public class Category implements Serializable {
     private String catDesc;
     */
 
-
+   @Transient
     public boolean getisNew() {
         return getId() == null;
     }

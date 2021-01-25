@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
         User_me user = new User_me();
         user.setUsername(vo.getUsername());
         user.setPassword(DigestUtils.md5DigestAsHex(vo.getPassword().getBytes()));
-        user.setDateCreated((Timestamp) new Date());
+        user.setDateCreated((new Date()).toString());
         user.setisactive(true);
         /*
         user.setEmail(vo.getEmail());
@@ -94,14 +94,15 @@ public class UserServiceImpl implements UserService {
         }
         user.setUsername(userInDB.getUsername());
         user.setPassword(userInDB.getPassword());
-        /*
-        user.setAvatarURL(userInDB.getAvatarURL());
+
+        user.setAvatarUrl(userInDB.getAvatarUrl());
+
         if(null==user.getEmail()){
             user.setEmail(userInDB.getEmail());
         }
-        user.setCreateAt(userInDB.getCreateAt());
-        user.setUpdateAt(new Date());
-        */
+        user.setDateCreated(userInDB.getDateCreated());
+       // user.setUpdateAt(new Date());
+
         return userRepository.save(user);
     }
 

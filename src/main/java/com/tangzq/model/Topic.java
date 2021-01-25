@@ -23,7 +23,6 @@ public class Topic implements Serializable {
     public int getId() {
         return this.id;
     }
-
     void setId(int Id) {
         this.id = Id;
     }
@@ -32,7 +31,6 @@ public class Topic implements Serializable {
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String Title) {
         this.title = Title;
     }
@@ -41,7 +39,6 @@ public class Topic implements Serializable {
     public String getDesc() {
         return desc;
     }
-
     public void setDesc(String Desc) {
         this.desc = Desc;
     }
@@ -50,7 +47,6 @@ public class Topic implements Serializable {
     public String getThumbURL() {
         return thumbURL;
     }
-
     public void setThumbURL(String ThumbURL) {
         this.thumbURL = ThumbURL;
     }
@@ -59,7 +55,6 @@ public class Topic implements Serializable {
     public String getContent() {
         return content;
     }
-
     public void setContent(String Content) {
         this.content = Content;
     }
@@ -82,32 +77,35 @@ public class Topic implements Serializable {
         this.authorid = authorid;
     }
 */
-/*
+
     @ManyToOne( targetEntity = User_me.class )
-    @JoinColumn(name = "authorid")
+    @JoinColumn(name = "authorid",insertable = false,updatable = false)
     public User_me getTopicauthor(){ return  this.topicauthor;}
     public void setTopicauthor(User_me author1){this.topicauthor=author1;}
-    */
 
-    /* @ManyToOne( targetEntity = Category.class)
-     @JoinColumn(name = "catid")
+
+     @ManyToOne( targetEntity = Category.class)
+     @JoinColumn(name = "catid",insertable = false,updatable = false)
      public Category getCategory(){return  this.category;}
-     public void setCategory(Category mCategory){ this.category=mCategory;  }*/
-    @Column(name = "catid")
-    public int getCatid() {
-        return this.catid;
-    }
+     public void setCategory(Category mCategory){ this.category = mCategory;  }
 
-    public void setCatid(int cid) {
-        this.catid = cid;
-    }
 
     @Column(name = "authorid")
     public int getauthorid() {
         return this.authorid;
     }
 
-    public void setauthorid(int cid) {
-        this.authorid = cid;
+    public void setauthorid(int aid) {
+        this.authorid = aid;
     }
+
+    @Column(name = "catid")
+    public int getcatid() {
+        return this.catid;
+    }
+
+    public void setcatid(int cid) {
+        this.catid = cid;
+    }
+
 }

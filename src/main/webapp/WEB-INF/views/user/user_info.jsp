@@ -27,7 +27,7 @@
                         <label for="email" class="col-lg-2 control-label">电子邮件</label>
                         <div class="col-lg-10">
 <%--                            <form:input path="email" cssClass="form-control" id="email"/>--%>
-                            <form:input path="" cssClass="form-control" id="email"/>
+                            <form:input path="email" cssClass="form-control" id="email"/>
                         </div>
                     </div>
 
@@ -35,7 +35,7 @@
                         <label for="website" class="col-lg-2 control-label">个人网站</label>
                         <div class="col-lg-10">
                      <%--       <form:input path="website" cssClass="form-control" id="website"/>--%>
-                            <form:input path="" cssClass="form-control" id="website"/>
+                            <form:input path="website" cssClass="form-control" id="website"/>
                         </div>
                     </div>
 
@@ -43,7 +43,7 @@
                         <label for="location" class="col-lg-2 control-label">所在地</label>
                         <div class="col-lg-10">
                 <%--     <form:input path="location" cssClass="form-control" id="location" placeholder="城市名即可，如苏州"/>--%>
-                            <form:input path="" cssClass="form-control" id="location" placeholder="城市名即可，如苏州"/>
+                            <form:input path="location" cssClass="form-control" id="location" placeholder="城市名即可，如苏州"/>
                         </div>
                     </div>
 
@@ -51,7 +51,7 @@
                         <label for="slogan" class="col-lg-2 control-label">签名</label>
                         <div class="col-lg-10">
                   <%--   <form:input path="slogan" cssClass="form-control" id="slogan"/>--%>
-                            <form:input path="" cssClass="form-control" id="slogan"/>
+                            <form:input path="slogan" cssClass="form-control" id="slogan"/>
                         </div>
                     </div>
 
@@ -59,7 +59,7 @@
                         <label for="selfDesc" class="col-lg-2 control-label">个人简介</label>
                         <div class="col-lg-10">
                     <%--     <form:textarea path="selfDesc" cssClass="form-control"></form:textarea>--%>
-                            <form:textarea path="" cssClass="form-control" id="selfDesc"></form:textarea>
+                            <form:textarea path="selfDesc" cssClass="form-control" id="selfDesc"></form:textarea>
                         </div>
                     </div>
                     <hr>

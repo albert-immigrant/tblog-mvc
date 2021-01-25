@@ -33,4 +33,6 @@ public interface TopicService2 {
     Object findByPage(IndexVo vo);
 
     void increaseVisitCount(String topicID);
+
+     TopicVo convertToVo(Topic topic);
 }

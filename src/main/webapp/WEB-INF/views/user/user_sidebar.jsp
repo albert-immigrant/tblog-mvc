@@ -4,13 +4,17 @@
 <div class="list-group">
     <div class="list-group-item">
         <div class="pull-left avatar">
-        <c:if test="${loginUser.avatarURLByUploaded}">
+
+        <c:if test="${loginUser.avatarURLUploaded}">
+
 <%--            <img class="img-circle" src="${contextPath}/upload/getImage/${loginUser.avatarURL}">--%>
             <img class="img-circle" src="${contextPath}/upload/getImage/">
         </c:if>
-        <c:if test="${!loginUser.avatarURLByUploaded}">
-            <img class="img-circle" src="${loginUser.avatarURL}">
+        <c:if test="${!loginUser.avatarURLUploaded}">
+            <img class="img-circle" src="${loginUser.avatarUrl}">
         </c:if>
+
+
         </div>
         <div class="pull-left info">
             <h4 style="margin-bottom: 0px;">${loginUser.username}</h4>

@@ -32,34 +32,33 @@ public interface TopicRepository2 extends CrudRepository<Topic, String> {
      * @return
      */
     //  Page<Topic> findByauthorid(String authorId,Pageable pageable);
-   // @Cacheable(value="links")
+    // @Cacheable(value="links")
     Page<Topic> findAll(Pageable pageable);
 
     @Override
     Optional<Topic> findById(String s);
+
     @Query(value = "select t from Topic t where t.id=?1 ")
     Optional<Topic> findById(int s);
 
 
-
-
-
     //  Page<Topic> findByAuthorName(String username, Pageable pageable);
 
-   // Page<Topic> findByTagsContains(String tagName, Pageable pageable);
+    // Page<Topic> findByTagsContains(String tagName, Pageable pageable);
 
-  // Page<Topic> findByCatid(String tab, Pageable pageable);
+    // Page<Topic> findByCatid(String tab, Pageable pageable);
 
-     Page<Topic> findBycatid(long catid, Pageable pageable);
-     Page<Topic> findTopicByCategory(Category category, Pageable pageable);
+    Page<Topic> findBycatid(long catid, Pageable pageable);
+
+    Page<Topic> findTopicByCategory(Category category, Pageable pageable);
 
 //     Page<Topic> findAllByCategoryid(long catid, Pageable pageable);
 
-   // List<Topic> findAllByCategoryid(long catid);
+    // List<Topic> findAllByCategoryid(long catid);
 
 //    Page<Topic> findByTitleLikeOrDescLike(String keywords, String keywords1, Pageable pageable);
 
- //   Page<Topic> findByCollectedUsersContains(String userId, Pageable pageable);
+    //   Page<Topic> findByCollectedUsersContains(String userId, Pageable pageable);
 
     /**
      * 查找指定用户的帖子
@@ -67,7 +66,8 @@ public interface TopicRepository2 extends CrudRepository<Topic, String> {
      * @param pageable
      * @return
      */
-    //   Page<Topic> findByAuthorName(String authorName, Pageable pageable);
+//       Page<Topic> findByAuthorName(String authorName, Pageable pageable);
+       Page<Topic> findByAuthorid(int authorid, Pageable pageable);
 
     /**
      * 查找含有指定标签的帖子
@@ -128,7 +128,7 @@ public interface TopicRepository2 extends CrudRepository<Topic, String> {
             "content," +
             "authorid"+
          *//*   "contentIsHTML," +*//*
-           *//* "createdate," +
+     *//* "createdate," +
             "deleted," +*//*
             "description," +
          *//*   "good," +
@@ -177,8 +177,15 @@ public interface TopicRepository2 extends CrudRepository<Topic, String> {
                      */
 
     String saveSql = "insert into Topic(catid,content,authorid,description,thumbURL,title,id)" +
-            " values (:catid,:content,:authorid,:description,:thumbURL,:title,:id)" ;
+            " values (:catid,:content,:authorid,:description,:thumbURL,:title,:id)";
 
-    @Query(value = saveSql,nativeQuery = true)
+    @Query(value = saveSql, nativeQuery = true)
     void saveMyPost(int catid, String content, int authorid, String description, String thumbURL, String title, int id);
+
+  /*  String saveSql2="insert into Topic values (:topic)";
+    @Query(value = saveSql2)
+    void saveMyPost(Topic topic);*/
+
+
+
 }

@@ -1,8 +1,11 @@
 package com.tangzq.controller;
 
 
+import com.tangzq.UserNameDb;
+import com.tangzq.demo_seed.RandomDataGenerator;
 import com.tangzq.model.Topic;
 import com.tangzq.model.User_me;
+import com.tangzq.repository.TopicRepository2;
 import com.tangzq.service.CategoryService;
 import com.tangzq.service.TopicService2;
 import com.tangzq.MockTopic;
@@ -25,6 +28,7 @@ import com.tangzq.vo.LoginUserVo;
 import com.tangzq.vo.TopicVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.Cache;
@@ -41,6 +45,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import javax.imageio.ImageIO;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -48,7 +56,10 @@ import javax.validation.Valid;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 
 /**
@@ -60,15 +71,17 @@ import java.util.List;
 @Slf4j
 @RequestMapping(value = "/")
 public class HomeController {
-    @Autowired
-private UserRepository userRepository;
+
     public static final String VCODE_SESSION_KEY="validateCode";
 
-//    @Value("${appname}")
+
+    //    @Value("${appname}")
  //   private String configAppName;
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
@@ -77,7 +90,10 @@ private UserRepository userRepository;
 
     @Autowired
     private TopicService2 topicService;
-
+    @PersistenceContext
+    protected EntityManager entityManager;
+    @PersistenceUnit(/*unitName = "test"*/)
+    private EntityManagerFactory entityManagerFactory;
 //
 //
 //    @Autowired
@@ -91,6 +107,10 @@ private UserRepository userRepository;
     @Autowired
     CacheManager cacheManager;
 
+    @Autowired
+    TopicRepository2 topicRepository2;
+
+
     /**
      * 跳转到首页
      * @param vo 首页参数封装
@@ -100,6 +120,11 @@ private UserRepository userRepository;
     @RequestMapping(value = "/")
 //    public String home() {
     public String home(IndexVo vo, ModelMap modelMap) {
+
+//        RandomDataGenerator rd = new RandomDataGenerator(topicService,categoryService,userService,topicRepository2,entityManager);
+//        rd.setFakeData();
+
+ /*       -------------------------------------------------*/
         User_me user1=  userRepository.findByUserName("admin");
         //Page<Topic> topics=(Page<Topic>)topicService.findByPage(vo);
         List<Topic> topics= (List<Topic>) topicService.findByPage(vo);

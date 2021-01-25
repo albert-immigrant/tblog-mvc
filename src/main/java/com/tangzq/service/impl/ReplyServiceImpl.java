@@ -69,7 +69,7 @@ public class ReplyServiceImpl implements ReplyService {
         authorInfo.setAuthorId(vo.getAuthorId());
         authorInfo.setAuthorName(vo.getAuthorName());
         authorInfo.setAuthorAvatar(vo.getAuthorAvatar());
-        reply.setAuthorInfo(authorInfo);
+       // reply.setAuthorInfo(authorInfo);
         reply.setReplyId(null);
         reply.setContentIsHTML(Boolean.TRUE);
         reply.setThumbsUPCount(0);

@@ -3,19 +3,15 @@ package com.tangzq.service.impl;
 import com.tangzq.model.Category;
 import com.tangzq.model.Topic;
 import com.tangzq.model.User_me;
-import com.tangzq.repository.TopicRepository;
 import com.tangzq.repository.TopicRepository2;
 import com.tangzq.repository.CategoryRepository;
 import com.tangzq.service.CategoryService;
 import com.tangzq.service.TopicService2;
 import com.tangzq.service.UserService;
 import com.tangzq.vo.IndexVo;
-import com.tangzq.vo.SearchVo;
 import com.tangzq.vo.TopicVo;
 //import org.ehcache.core.EhcacheManager;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,7 +23,8 @@ import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.sql.Date;
+import javax.sql.DataSource;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,6 +44,8 @@ public class TopicSerivceImpl_2 implements TopicService2 {
     protected EntityManager entityManager;
     @PersistenceUnit(/*unitName = "test"*/)
     private EntityManagerFactory entityManagerFactory;
+    @Autowired
+    private DataSource dataSource;
 
 
     @Override
@@ -68,7 +67,11 @@ public class TopicSerivceImpl_2 implements TopicService2 {
             Sort sort = Sort.by(Sort.Direction.DESC, "createdate");
             //  Pageable pageable = PageRequest.of(vo.getPageNO()-1, vo.getPageSize(), sort);
             Pageable pageable = PageRequest.of(vo.getPageNO() - 1, vo.getPageSize());
-            Page<Topic> topics = topicRepository2.findAll(pageable);
+            try {
+                Page<Topic> topics = topicRepository2.findAll(pageable);
+            }catch (Exception e){
+               e.printStackTrace();
+            }
             return (List<Topic>) topicRepository2.findAll(pageable).getContent();
         } else {
 
@@ -101,8 +104,11 @@ public class TopicSerivceImpl_2 implements TopicService2 {
     public Page<Topic> findByUsernameAndPage(String username, int pageNO, int pageSize) {
         Pageable pageable = PageRequest.of(pageNO - 1, pageSize);
         // return topicRepository.findByAuthorName(username,pageable);
-        Page<Topic> topics = (Page<Topic>) topicRepository2.findAll(pageable);
-        return topicRepository2.findAll(pageable);
+       User_me author= userService.findByUsername(username);
+        Page<Topic> topics = topicRepository2.findByAuthorid(author.getId(),pageable);
+      //  Page<Topic> topics = (Page<Topic>) topicRepository2.findAll(pageable);
+     //   return topicRepository2.findAll(pageable);
+        return  topics;
     }
 
     @Override
@@ -169,10 +175,10 @@ public class TopicSerivceImpl_2 implements TopicService2 {
 
 
         Topic topic_a = addTopic(vo);
-        topic_a.setCatid(category.getId().intValue());
+       // topic_a.setCatid(category.getId().intValue());
       //  topic_a.setCategory(category);
       //  topic_a.setTopicauthor(user1);
-        categoryRepository.save(category);
+//        categoryRepository.save(category);
         /*使用 entitymanager*/
         /*
         entityManager.getTransaction().begin();
@@ -183,7 +189,7 @@ public class TopicSerivceImpl_2 implements TopicService2 {
 
         Topic Topic2 = topicRepository2.save(topic_a);
         // topicRepository2.saveMyPost(Topic1.getCatid(),Topic1.getContent(),Topic1.getTopicauthor().getId(),Topic1.getDesc(),Topic1.getThumbURL(),Topic1.getTitle(),Topic1.getId());
-        String sql = "Insert into Topic(id,title,mydescription,thumbURL,content,authorid,catid)" +
+        String sql = "Insert into Topic(id,title,desc,thumbURL,content,topicauthor,category)" +
                 " SELECT  2,'我的測試文章-簡單測試寫入'," +
                 " '簡單測試寫入'," +
                 "'' ,'永豐金控前董事長何壽川被控涉及三寶集團超貸等弊案，台北地方法院歷經3年多審理，今天依證交法特別背信罪判處何壽川有期徒刑8年6月。全案可上訴。',1,1 " +
@@ -193,13 +199,15 @@ public class TopicSerivceImpl_2 implements TopicService2 {
                     2,'我的測試文章-簡單測試寫入', '簡單測試寫入','',
                     '永豐金控前董事長何壽川被控涉及三寶集團超貸等弊案，台北地方法院歷經3年多審理，今天依證交法特別背信罪判處何壽川有期徒刑8年6月。全案可上訴。',
                     1, 1);*/
-          /*
+
             CriteriaBuilder cb =entityManager.getCriteriaBuilder();
             CriteriaQuery<Topic> query_topic = cb.createQuery(Topic.class);
-            Root<Topic>  c= query_topic.from(Topic.class);
+            Root<Topic> c= query_topic.from(Topic.class);
 
             Query query=entityManager.createQuery(sql);
-            */
+            query.executeUpdate();
+
+
         return topic_a;
     }
 
@@ -224,7 +232,7 @@ public class TopicSerivceImpl_2 implements TopicService2 {
     }
 
 
-    private Topic convertToTopic(TopicVo vo) {
+    public Topic convertToTopic(TopicVo vo) {
         if (null == vo) {
             return null;
         }
@@ -267,7 +275,8 @@ public class TopicSerivceImpl_2 implements TopicService2 {
         return Topic;
     }
 
-    private TopicVo convertToVo(Topic topic) {
+    @Override
+    public TopicVo convertToVo(Topic topic) {
         if (null == topic) {
             return null;
         }

@@ -33,10 +33,11 @@ public class Reply {
 
     // @OneToOne
 // @JoinColumn(name = "authorInfo",referencedColumnName = "user")
+    /*
     @Transient
     private ReplyAuthorInfo authorInfo;
 
-
+*/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "replyid")
@@ -118,14 +119,14 @@ public class Reply {
     public void setCreatedate(Date date) {
         this.Createdate = date;
     }
-
+/*
     public ReplyAuthorInfo getAuthorInfo() {
         return this.authorInfo;
     }
 
     public void setAuthorInfo(ReplyAuthorInfo info) {
         this.authorInfo = info;
-    }
+    }*/
 
     /*------------------------*/
     public String toString() {

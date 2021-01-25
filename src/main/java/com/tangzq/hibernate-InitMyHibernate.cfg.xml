@@ -20,6 +20,6 @@
         <mapping class="com.tangzq.model.Topic"/>
         <mapping class="com.tangzq.model.Reply"/>
         <mapping class="com.tangzq.model.Tag"/>
-        <mapping class="com.tangzq.model.Catagories_1"/>
+        <mapping class="com.tangzq.model.Category"/>
     </session-factory>
 </hibernate-configuration>

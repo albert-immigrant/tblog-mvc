@@ -25,7 +25,7 @@
                                 </tr>
                                 <c:forEach items="${pager.content}" var="cat">
                                     <tr>
-                                        <td>${cat.name}</td>
+                                        <td>${cat.catname}</td>
                                         <td>${cat.catdir}</td>
                                         <td>${cat.createat}</td>
 

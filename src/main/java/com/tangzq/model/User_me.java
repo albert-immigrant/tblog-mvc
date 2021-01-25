@@ -3,6 +3,7 @@ package com.tangzq.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -13,10 +14,10 @@ public class User_me implements Serializable {
     private String username;
     private String password;
     private boolean isactive;
-    private Timestamp dateCreated;
+    private String dateCreated;
     private String email;
     private String avatarUrl;
-    private boolean avatarUrlByUploaded;
+    private boolean avatarURLUploaded;
     private String website;
     private String location;
     private String slogan;
@@ -35,7 +36,7 @@ public class User_me implements Serializable {
     }
 
     @Basic
-    @Column(name = "username", nullable = false, length = 50)
+    @Column(name = "username", nullable = false, length = 50,unique = true)
     public String getUsername() {
         return username;
     }
@@ -63,10 +64,10 @@ public class User_me implements Serializable {
 
     @Basic
     @Column(name = "date_created", nullable = false)
-    public Timestamp getDateCreated() {
+    public String getDateCreated() {
         return dateCreated;
     }
-    public void setDateCreated(Timestamp dateCreated) {
+    public void setDateCreated(String dateCreated) {
         this.dateCreated = dateCreated;
     }
 
@@ -89,12 +90,12 @@ public class User_me implements Serializable {
     }
 
     @Basic
-    @Column(name = "avatarURLByUploaded", nullable = true)
-    public boolean getAvatarUrlByUploaded() {
-        return avatarUrlByUploaded;
+    @Column(name = "avatarURLUploaded", nullable = true)
+    public boolean getAvatarURLUploaded() {
+        return avatarURLUploaded;
     }
-    public void setAvatarUrlByUploaded(boolean avatarUrlByUploaded) {
-        this.avatarUrlByUploaded = avatarUrlByUploaded;
+    public void setAvatarURLUploaded(boolean avatarURLUploaded) {
+        this.avatarURLUploaded = avatarURLUploaded;
     }
 
     @Basic
@@ -145,7 +146,7 @@ public class User_me implements Serializable {
                 Objects.equals(dateCreated, user.dateCreated) &&
                 Objects.equals(email, user.email) &&
                 Objects.equals(avatarUrl, user.avatarUrl) &&
-                Objects.equals(avatarUrlByUploaded, user.avatarUrlByUploaded) &&
+                Objects.equals(avatarURLUploaded, user.avatarURLUploaded) &&
                 Objects.equals(website, user.website) &&
                 Objects.equals(location, user.location) &&
                 Objects.equals(slogan, user.slogan) &&
@@ -154,7 +155,7 @@ public class User_me implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, isactive, dateCreated, email, avatarUrl, avatarUrlByUploaded, website, location, slogan, selfDesc);
+        return Objects.hash(id, username, password, isactive, dateCreated, email, avatarUrl, avatarURLUploaded, website, location, slogan, selfDesc);
     }
 /*
     @OneToMany(mappedBy = "userByUId")
