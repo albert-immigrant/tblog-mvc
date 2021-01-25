@@ -1,7 +1,7 @@
 # tblog-porting
 from mongodb to mysql
 
-![Alt text](/path/to/img.jpg)
+![Alt text](../screenshot/tblog.png)
 
 # the original tblog 
    https://github.com/albert-immigrant/tblog-porting/tree/original-fork
