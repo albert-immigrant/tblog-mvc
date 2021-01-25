@@ -1,4 +1,4 @@
 # tblog-porting
 from mongodb to mysql
 
-#the original tblog
+#the original tblog https://github.com/albert-immigrant/tblog-porting/tree/original-fork
