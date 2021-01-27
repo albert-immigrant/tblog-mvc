@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+//import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaSessionFactoryBean;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -17,8 +17,8 @@ import org.springframework.web.servlet.view.JstlView;
 
 //import javax.persistence.EntityManagerFactory;
 
-@Configuration
-@Slf4j
+//@Configuration
+//@Slf4j
 public class WebConfig extends WebMvcConfigurerAdapter {
   //  @Autowired
   //  ApplicationContext context;
@@ -27,7 +27,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
       //  registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/cat/**","/topic/**","/user/**","/like/**","/collect/**");
         super.addInterceptors(registry);
-        log.info("拦截器注册完毕");
+     //   log.info("拦截器注册完毕");
     }
 
     /*
