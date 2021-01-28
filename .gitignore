@@ -3,7 +3,6 @@ springMVC.eml
 springMVC.iml
 springMVC.userlibraries
 tblog-mvc.iml
-/target/
 src/main/resources/.DS_Store
 *.DS_Store
 .md
