@@ -1,7 +1,7 @@
 package cz.jiripinkas.jba.service;
 
-import cz.jiripinkas.jba.entity.Category;
-import cz.jiripinkas.jba.entity.Topic;
+import cz.jiripinkas.jba.entity2.Category;
+import cz.jiripinkas.jba.entity2.Topic;
 import cz.jiripinkas.jba.vo.IndexVo;
 import cz.jiripinkas.jba.vo.TopicVo;
 import org.springframework.data.domain.Page;

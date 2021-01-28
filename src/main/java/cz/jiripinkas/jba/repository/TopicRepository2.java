@@ -1,7 +1,7 @@
 package cz.jiripinkas.jba.repository;
 
-import cz.jiripinkas.jba.entity.Category;
-import cz.jiripinkas.jba.entity.Topic;
+import cz.jiripinkas.jba.entity2.Category;
+import cz.jiripinkas.jba.entity2.Topic;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

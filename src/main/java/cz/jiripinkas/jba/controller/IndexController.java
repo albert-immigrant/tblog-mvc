@@ -1,6 +1,6 @@
 package cz.jiripinkas.jba.controller;
 
-import cz.jiripinkas.jba.entity.Topic;
+import cz.jiripinkas.jba.entity2.Topic;
 import cz.jiripinkas.jba.repository.TopicRepository2;
 import cz.jiripinkas.jba.service.ItemService;
 import cz.jiripinkas.jba.service.TopicService2;

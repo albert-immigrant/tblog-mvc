@@ -1,8 +1,10 @@
 package cz.jiripinkas.jba.service.impl;
 
-import cz.jiripinkas.jba.entity.Category;
-import cz.jiripinkas.jba.entity.Topic;
+import cz.jiripinkas.jba.entity2.Category;
+import cz.jiripinkas.jba.entity2.Topic;
 //import com.tangzq.model.User_me;
+import cz.jiripinkas.jba.entity2.Category;
+import cz.jiripinkas.jba.entity2.Topic;
 import cz.jiripinkas.jba.repository.TopicRepository2;
 //import cz.jiripinkas.jba.repository.CategoryRepository;
 //import com.tangzq.service.CategoryService;
