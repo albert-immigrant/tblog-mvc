@@ -1,151 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-       http://www.springframework.org/schema/beans/spring-beans.xsd 
-       http://www.springframework.org/schema/security 
-       http://www.springframework.org/schema/security/spring-security.xsd
-       http://www.springframework.org/schema/webflow-config 
-       ">
-
-	<!-- database properties DataSource -->
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-                  <!--  for H2-->
-<!--			<property name="driverClassName" value="org.h2.Driver" />	-->
-		<!--      <property name="url" value="jdbc:h2:tcp://localhost/~/ecommerce" />-->
-		<!--		<property name="url" value="jdbc:h2:tcp://localhost/E:/_PL_java_lab_sp_ShoppingCart-master/ecommerce"/>-->
-
+	<context:component-scan base-package="cz.jiripinkas.jba">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
 
 
+	<tx:annotation-driven transaction-manager="transactionManager" />
 
-
-              <!-- for mysql-->
-				<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/lab_ecommerce_ikismail" />
-		<!-- <property name="url" value="jdbc:mysql://localhost/ecommerce_ikismail" />  -->
-
-            <property name="username" value="root" />
-            <property name="password" value="kingschan" />
-        </bean>
-
-        <bean id="sessionFactory"
-            class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-
-            <!-- dependency Injection of dataSource -->
-		<property name="dataSource" ref="dataSource"></property>
-<!--		<property name="packagesToScan" value="com"/>-->
-		<property name="hibernateProperties">
-			<props>
-
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
-
-				<!-- whether the query wants to show the data in console -->
-				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.format_sql">true</prop>
-
-				<!-- hibernate mapping to database automatically -->
-				<!-- when we use create-drop instead of update the table is created automatically 
-					when the server runs after that it will drop when server stops -->
-				<prop key="hibernate.hbm2ddl.auto">create</prop>
-
-
-			</props>
-		</property>
-
-		<property name="packagesToScan"	value="com.tangzq.model"/>
-		<!-- packages to scan for Entity Classes annotated Classes package -->
-			<!--
-			<property name="annotatedClasses">
-				<list>
-					<value>com.model.Product</value>
-					<value>com.model.Authorities</value>
-					<value>com.model.BillingAddress</value>
-					<value>com.model.Cart</value>
-					<value>com.model.CartItem</value>
-					<value>com.model.Customer</value>
-					<value>com.model.CustomerOrder</value>
-					<value>com.model.ShippingAddress</value>
-					<value>com.model.User</value>
-					<value>com.model.Queries</value>
-				</list>
-			</property>
--->
-
+	<bean class="org.springframework.orm.jpa.JpaTransactionManager"
+		id="transactionManager">
+		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<!-- A transaction manager is the part of an application that is responsible 
-		for coordinating transactions across one or more resources. In the Spring 
-		framework, the transaction manager is effectively the root of the transaction 
-		system. -->
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
+	<jpa:repositories base-package="cz.jiripinkas.jba.repository" />
 
-	<!-- Spring - Security Purpose -->
-	<!--
-	<security:http auto-config="true" use-expressions="true">
-		<security:intercept-url pattern="/index/**"
-			access="permitAll" />
-		<security:intercept-url pattern="/index1/**"
-			access="permitAll" />
-		<security:intercept-url pattern="/login"
-			access="permitAll" />
-		<security:intercept-url pattern="/cart/**"
-			access="permitAll" />
-		<security:intercept-url pattern="/get*/**"
-			access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
-		<security:intercept-url pattern="/admin*/**"
-			access="hasRole('ROLE_ADMIN')" />
-		<security:form-login login-page="/login"
-			login-processing-url="/j_spring_security_check"
-			username-parameter="j_username"
-			password-parameter="j_password"
-			authentication-failure-url="/login?error"
-			default-target-url="/index1" />
-		<security:logout logout-url="/logout" delete-cookies="JSESSIONID" logout-success-url="/login?logout" />
-		<security:csrf disabled="true"/>
-	</security:http>
-	-->
-<!--
+	<import resource="security.xml" />
 
-	<security:authentication-manager>
-		<security:authentication-provider>
-			 &lt;!&ndash; <security:user-service>
-			<security:user name="ismail@gmail.com" password="12345"
-			authorities="ROLE_USER" />
-			<security:user name="ajmal@gmail.com" password="54321"
-			authorities="ROLE_ADMIN" />
-			</security:user-service> &ndash;&gt;
-
-			 <security:jdbc-user-service
-				data-source-ref="dataSource"
-				authorities-by-username-query="SELECT 
-				emailId,authorities FROM authorities WHERE emailId =?"
-				users-by-username-query="SELECT 
-				emailId, password, enabled FROM users WHERE emailId=? " />
-				
-		</security:authentication-provider>
-
-	</security:authentication-manager>
--->
-<!--
-	<webflow-config:flow-executor id="flowExecutor"
-		flow-registry="flowRegistry">
-	</webflow-config:flow-executor>
+	<task:annotation-driven />
 	
-	<webflow-config:flow-registry id="flowRegistry"
-		base-path="/WEB-INF/flow">
-	<webflow-config:flow-location path="/checkout/checkout-flow.xml"
-			id="checkout"></webflow-config:flow-location>
-	</webflow-config:flow-registry>
-	<bean id="flowHandleMapping"
-		class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
-		<property name="flowRegistry" ref="flowRegistry"></property>
-	</bean>
-	<bean id="flowHandlerAdapter" class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter">
-	<property name="flowExecutor" ref="flowExecutor"></property>
-	</bean>
-	-->
+	<beans profile="dev">
+		<import resource="database-dev.xml"/>
+	</beans>
+
+	<beans profile="prod">
+		<import resource="database-prod.xml"/>
+	</beans>
+
 </beans>
